@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chat</title>
+
+<!-- BootstrapのCSS -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<!-- BootstrapのJavaScript -->
+<script type="text/javascript" src="js/jquery-3.7.1.js"></script>
+<script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+
+
+<style>
+body {
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+#main {
+    background: #f8f9fa;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+/* サイドバーのスタイル */
+#sidebar {
+    width: 30%;
+    background: #f8f9fa;
+    color: #343a40;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+#sidebar h2 {
+    margin-bottom: 20px;
+}
+
+#sidebar .btn {
+    width: 80%;
+    margin: 10px 0;
+}
+
+li {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* メインエリア */
+#main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    color: #40484f;
+}
+
+#chatbox {
+    width: 100%;
+    height: 100vh;
+    border: 1px solid #ccc;
+    background: #fefafa;
+    padding: 10px;
+    overflow-y: scroll;
+}
+.btn{
+    white-space: nowrap; 
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+}
+/* プラスのまる */
+.dli-plus-circle {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+  line-height: 1;
+  position: relative;
+  width: 1.3em;
+  height: 1.3em;
+  border: 0.1em solid currentColor;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.dli-plus-circle > span {
+  width: 52%;
+  height: 0.1em;
+  background: currentColor;
+  border-radius: 0.1em;
+  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+/* プラスのまる */
+.dli-plus-circle > span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  transform: rotate(90deg);
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 0px solid #333;
+  border-radius: 10px;
+  overflow: hidden;
+}
+th, td {
+  padding: 5px 5px;
+  border-bottom: 0px solid #555;
+}
+th {
+  background-color: #eee;
+}
+td {
+  border-left: 0px solid #555;
+}
+tr:last-child th,
+tr:last-child td {
+  border-bottom: none;
+}
+/* olのスタイル */
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none; /* デフォルトの数字を非表示に */
+  counter-reset: li;
+}
+
+/* ol内のliのスタイル */
+ol li {
+  position: relative;
+  font-size: 16px;
+  padding-left: 1.5em;
+  line-height: 1.5;
+  padding: 0px 0px 0px 24px;
+}
+/* 2つ目以降のliにmargin-topを指定 */
+ol li:not(:first-child) {
+  margin-top: 0.5em;
+}
+
+/* 数字のスタイル */
+ol li::before {
+  counter-increment: li;
+  content: counter(li);
+  position: absolute;
+  left: 0px;
+  top: 2px; /* 数字のY軸線上の位置を調整 */
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #0a6109b0;
+  font-size: 12px;
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+}
+.popL {
+  --bs-popover-max-width: 90%;
+}
+.popR {
+  --bs-popover-max-width: 55vw;
+}
+
+/* 吹き出し */
+.popover {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 1px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<script>
+        const API_KEY = "YOUR_OPENAI_API_KEY"; // OpenAIのAPIキー
+
+        document.getElementById("sendButton").addEventListener("click", async function() {
+            let userInput = document.getElementById("userInput").value;
+            if (!userInput) return;
+
+            let chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += `<div class="p-2 border-bottom"><strong>あなた:</strong> ${userInput}</div>`;
+
+            let response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: userInput }]
+                })
+            });
+
+            let data = await response.json();
+            let gptResponse = data.choices[0].message.content;
+
+            chatbox.innerHTML += `<div class="p-2 bg-light border-bottom"><strong>ChatGPT:</strong> ${gptResponse}</div>`;
+            document.getElementById("userInput").value = "";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        });
+
+        // 新しいチャットを開始（チャットボックスをクリア）
+        document.getElementById("newChat").addEventListener("click", function() {
+            document.getElementById("chatbox").innerHTML = "";
+        });
+
+        // 検索ボタンの動作（仮）
+        document.getElementById("searchButton").addEventListener("click", function() {
+            let searchQuery = document.getElementById("searchInput").value;
+            alert(`検索機能は未実装: ${searchQuery}`);
+        });
+
+        //const popover = new bootstrap.Popover('.example-popover', {
+        //  container: '.modal-body'
+        //});
+
+        const exampleEl = document.getElementById('example');
+        const popover = new bootstrap.Popover(exampleEl, options);
+
+</script>
+</head>
+<body>
+  <!-- 左側のナビゲーション -->
+  <div id="sidebarL" style="width:15%;">
+    <h2>       
+    </h2>
+        <table>
+        <tr>
+          <td><input type="text" id="searchInput" class="form-control" placeholder="履歴検索ワードを入力"></td>
+          <td><button id="searchButton" class="btn btn-secondary">&nbsp;検 索&nbsp;</button></td>
+        </tr>
+      </table>
+      <ol>
+        <div id="chatbox" class="mb-3 border rounded"><span>
+        <li>text-overflow プロパティを指定することで、文字列が表示領域からはみ出した時に末尾を三点リーダーにした状態で省略する方法は？</li>
+        <li>履歴リスト内容２</li>
+        <li>履歴リスト内容３</li>
+        <li>履歴リスト内容４</li>
+        <li>履歴リスト内容５</li>
+        <li>履歴リスト内容６</li>
+        <li>履歴リスト内容７</li>
+        <li>履歴リスト内容８</li>
+        <li>履歴リスト内容９</li>
+        <li>履歴リスト内容１０</li>
+        <li>履歴リスト内容１１</li>
+        <li>履歴リスト内容１２</li>
+        <li>履歴リスト内容１３</li>
+        <li>履歴リスト内容１４</li>
+        <li>履歴リスト内容１５</li>
+        <li>履歴リスト内容１６</li>
+        <li>履歴リスト内容１７</li>
+        <li>履歴リスト内容１８</li>
+        <li>履歴リスト内容１９</li>
+        <li>履歴リスト内容２０</li>
+        </span>
+        </div>
+      </ol>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div id="main" style="width:65%;">
+    <ul style="color: #343a40;">
+      <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 48px; height: 48px; opacity: 1;" xml:space="preserve">
+        <style type="text/css">
+          .st0{fill:#4B4B4B;}
+        </style>
+        <g>
+          <path class="st0" d="M92.574,294.24V124.336H43.277C19.449,124.336,0,144.213,0,168.467v206.44
+            c0,24.254,19.449,44.133,43.277,44.133h62v45.469c0,3.041,1.824,5.777,4.559,6.932c2.736,1.154,5.957,0.486,8.023-1.641
+            l49.844-50.76h106.494c23.828,0,43.279-19.879,43.279-44.133v-0.061H172.262C128.314,374.846,92.574,338.676,92.574,294.24z" style="fill: rgb(86, 152, 222);"></path>
+          <path class="st0" d="M462.717,40H172.26c-27.105,0-49.283,22.59-49.283,50.197v204.037c0,27.61,22.178,50.199,49.283,50.199
+            h164.668l75.348,76.033c2.399,2.442,6.004,3.172,9.135,1.852c3.133-1.322,5.176-4.434,5.176-7.887v-69.998h36.131
+            c27.106,0,49.283-22.59,49.283-50.199V90.197C512,62.59,489.822,40,462.717,40z M369.156,280.115H195.92v-24.316h173.236V280.115z
+              M439.058,204.129H195.92v-24.314h243.138V204.129z M439.058,128.143H195.92v-24.315h243.138V128.143z" style="fill: rgb(86, 152, 222);"></path>
+        </g>
+        </svg>
+                                                                                                                                        
+        &nbsp;Chat　　<button id="newChat" class="btn btn-secondary"><span class="dli-plus-circle"><span></span></span> 新しいチャット</button>
+    </ul>
+
+  <!-- メインスクロール -->
+  <div id="chatbox" class="mb-3 border rounded">
+
+    <div class="position-relative" style="height: 30%;">
+      <div class="position-absolute top-0 end-0">
+        <div class="popover popR" role="tooltip" id="popover328533">
+          <div class="arrow" style="top: 24px;"></div>
+          <h3 class="popover-header popR">質問 (No123456789)</h3>
+          <div class="popover-body">before と after 2つの擬似要素を駆使することで実現しています。before は三点リーダー、after はそれを隠すマスクとしての役割を果たしています。コードだけでは分かり辛いので順番に説明していきましょう</div>
+        </div>
+      </div>
+    </div>
+
+    <!---->
+    <div class="position-relative">
+      <div class="position-absolute top-0 start-0">
+        <div class="popover popL" role="tooltip" id="popover328533">
+          <div class="arrow" style="top: 24px;"></div>
+          <h3 class="popover-header">回答 (No123456789)
+          </h3>
+          <div class="popover-body">before と after 2つの擬似要素を駆使することで実現しています。before は三点リーダー、after はそれを隠すマスクとしての役割を果たしています。コードだけでは分かり辛いので順番に説明していきましょう</div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+      <p>
+      <div class="position-relative">
+        <div class="position-absolute top-0 end-0">
+          <div class="popover popR" role="tooltip" id="popover328533">
+            <div class="arrow" style="top: 24px;"></div>
+            <h3 class="popover-header popR">質問 (No123456789)</h3>
+            <div class="popover-body">before と after 2つの擬似要素を駆使することで実現しています。before は三点リーダー、after はそれを隠すマスクとしての役割を果たしています。コードだけでは分かり辛いので順番に説明していきましょう</div>
+          </div>
+        </div>
+    <!---->
+        <div class="position-absolute top-0 start-0">
+          <br>        
+          <br>        
+          <br>        
+              <div class="popover popL" role="tooltip" id="popover328533">
+            <div class="arrow" style="top: 24px;"></div>
+            <h3 class="popover-header">回答 (No123456789)
+            </h3>
+            <div class="popover-body">before と after 2つの擬似要素を駆使することで実現しています。before は三点リーダー、after はそれを隠すマスクとしての役割を果たしています。コードだけでは分かり辛いので順番に説明していきましょう</div>
+          </div>
+        </div>
+      </div>
+      </p>
+    <!---->
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      </div>
+        <div class="chat-input">
+            <textarea type="text" rows="3" id="userInput" class="form-control" placeholder="ご質問をどうぞ..."></textarea>
+        </div>
+         <div class="chat-input">
+            　　　<button id="sendButton" class="btn btn-outline-primary">送信</button>
+         </div>
+    </div>
+  </div>
+
+    <!-- 右側のナビゲーション -->
+    <div id="sidebarR" style="height:100%;width:15%;">                                                                                                                                                                                                      
+      <h2>       
+      </h2>
+<br><br>
+      <form class="row g-3">
+      
+      <table>
+        <tr>
+          <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">自動選択（エージェント）</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  広く聞く
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  絞り込む
+                </label>
+              </div>
+          </span>
+          </td>
+        </tr>
+      </table>
+
+      <ol>
+        <div id="chatbox" class="mb-3 border rounded">
+
+          <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck1">エージェントＡＡ</label>
+          
+            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck2">エージェントＢ</label>
+          
+            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck3">エージェントＣ</label>
+          
+            <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck4">エージェントＤ</label>
+          
+            <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck5">エージェントＥ</label>
+          
+            <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
+            <label class="btn btn-outline-success" for="btncheck6">エージェントＦ</label>
+          
+          </div>
+
+      </form>
+  </div>
+</body>
+</html>

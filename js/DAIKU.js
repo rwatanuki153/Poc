@@ -51,6 +51,4 @@ const API_KEY = "YOUR_OPENAI_API_KEY"; // OpenAIのAPIキー
   $('[data-toggle="tooltip"]').tooltip()
   });
 */
-  const exampleEl = document.getElementById('example');
-  const popover = new bootstrap.Popover(exampleEl, options);
 

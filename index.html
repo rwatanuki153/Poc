@@ -10,31 +10,39 @@
 <link rel="stylesheet" href="css/DAIKU.css">
 <!-- Bootstrap,jqueryのJavaScript -->
 <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="js/DAIKU.js"></script>
 </head>
 <body>
-  <!-- 左側のナビゲーション -->
-  <div id="sidebarL" style="width:18%;">
-    <h2>       
-    </h2>
-        <table>
-          <tr>
-            <td>    <ul style="color: #343a40;">
-              <img src ="img/chat.svg" width="38" height="38"/>                                                                                                                                       
-                &nbsp;<b>DAIKU</b>&nbsp;&nbsp;v0.1
-            </ul>
-        </td>
-            <td></td>
-          </tr>
-          <tr>
-          <td><input type="text" id="searchInput" class="form-control" placeholder="履歴検索ワードを入力"></td>
-          <td><button id="searchButton" class="btn btn-secondary">&nbsp;検 索&nbsp;</button></td>
-        </tr>
-      </table>
-      <ol>
-        <div id="chatbox" class="mb-3 border rounded"><span>
+<!-- タイトル Lv0-Lv1-Lv2-->
+<div class="flexbox flex-column" style="width:100vw;height:auto;">
+  <div class="flexbox flex-row">
+    <div class="flexbox" style="padding: 4px 0px; height:45px;">
+      <ul style="color: #343a40;">
+        <img src ="img/ai.png" width="72.4" height="27.5" style="margin-top: 9px;"/>                                                                                                                                       
+          &nbsp;&nbsp;&nbsp;&nbsp;<b>DAIKU</b>&nbsp;&nbsp;v0.3
+      </ul>　　　　　　　　
+      <ul style="color: #343a40;">
+        　　<button id="newChat" class="btn btn-secondary"><img src ="img/new.svg" width="24" height="24"/> 新しいチャット</button>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <hr>
+<!-- 左側のナビゲーション Lv1-Lv2 -->
+<div class="flexbox flex-row" style="width:100vw;">
+  <div id="sidebarL" style="width:18vw;">
+    &nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;検索履歴</b>
+<!-- タイトル Lv0-Lv1-Lv2
+<table>
+      <tr>
+        <td><input type="text" id="searchInput" class="form-control" placeholder="履歴検索ワードを入力"></td>
+        <td><button id="searchButton" class="btn btn-secondary">&nbsp;検 索&nbsp;</button></td>
+      </tr>
+    </table>
+-->
+    <ol>
+      <div id="chatbox" class="mb-3 border rounded"><span>
         <li class="ellipsis">text-overflow プロパティを指定することで、文字列が表示領域からはみ出した時に末尾を三点リーダーにした状態で省略する方法は？</li>
         <li class="ellipsis">windowsにおいてUSBマイクの優先度は</li>
         <li class="ellipsis">Log Analytics エクスペリエンスの最大化 アラート ルールを管理します の通知の設定</li>
@@ -55,19 +63,17 @@
         <li class="ellipsis">履歴リスト内容１８</li>
         <li class="ellipsis">履歴リスト内容１９</li>
         <li class="ellipsis">履歴リスト内容２０</li>
-        </span>
-        </div>
-      </ol>
+      </span>
+      </div>
+    </ol>
   </div>
 
-  <!-- メインコンテンツ -->
-  <div id="main" style="width:62%;">
-    <ul style="color: #343a40;">
-      　　<button id="newChat" class="btn btn-secondary"><img src ="img/new.svg" width="24" height="24"/></span> 新しいチャット</button>
-    </ul>
+  <!-- メインコンテンツ Lv2-->
+  <div class="flexbox" style="width:67vw;">
+    <div id="main" style="height:100vh;">
 
   <!-- メインスクロール -->
-  <div id="chatbox" class="mb-3 border rounded" style="height: 80%;">
+  <div id="chatbox" class="mb-3 border rounded" style="height:80%;">
 
     <div class="container my-4">
         <div class="popover popR" role="tooltip" id="popover328533">
@@ -154,7 +160,7 @@
           🔹 5. ルールの保存と有効化
           すべての設定を確認し、「作成」 をクリックするとアラートルールが有効化されます。
           
-                </div>
+      </div>
     </div>
   </div>
 <!---->
@@ -214,12 +220,15 @@
     <textarea type="text" rows="3" id="userInput" class="form-control" placeholder="ご質問をどうぞ..."></textarea>
   </div>
   <div class="chat-input">
-    　　　<button id="sendButton" class="btn btn-outline-primary">送 信</button>
+    　　　<button id="sendButton" class="btn btn-secondary">&nbsp;送 信&nbsp;</button>
   </div>
+
+</div>
 </div>
 
-<!-- 右側のナビゲーション -->
-<div id="sidebarR" style="height:100%;width:15%;">                                                                                                                                                                                                      
+<!-- 右側のナビゲーション L2-->
+<div class="flexbox" style="height: auto;">
+  <div id="sidebarR" style="width: 15vw;">                                                                                                                                                                                                      
   <br>
   <h6 class="heading-21">エージェント選択</h6>
       <form class="row g-3">
@@ -279,6 +288,13 @@
         </div>
       </ol>
       </form>
+    </div>
+
   </div>
+  
+</div>
+
+</div>
+
 </body>
 </html>

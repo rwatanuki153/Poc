@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/DAIKU.css">
     <!-- Bootstrap,jqueryのJavaScript -->
     <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/DAIKU.js"></script>
     <script type="text/javascript" src="js/comLib.js"></script>
     <script>
@@ -42,9 +42,9 @@
         <div class="flexbox flex-row">
             <div class="flexbox" style="padding: 4px 0px; height:45px;">
                 <ul style="color: #343a40;">
-                    <img src="img/ai.png" width="72.4" height="27.5" style="margin-top: 9px;" />
+                    <img src="img/ai.png" width="72" height="27" style="margin-top: 9px;" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>DAIKU</b>&nbsp;&nbsp;v0.4
+                    <b>DAIKU</b>&nbsp;&nbsp;v0.5
                 </ul>
                 <ul style="color: #343a40;">
                     <button id="newChat" class="btn btn-secondary"><img src="img/new.svg" width="24" height="24" /> 新しいチャット</button>
@@ -94,23 +94,23 @@
 
         <!-- メインコンテンツ Lv2-->
         <div class="flexbox" style="width:67vw;">
-            <div id="main" style="height:90vh;">
+            <div id="main" style="height:95vh;">
 
                 <!-- メインスクロール -->
                 <div id="chatbox" class="mb-3 border rounded" style="height:85%;">
 
                     <!---->
                     <div class="container my-4">
-                        <div class="popover popR" role="tooltip" id="popover328533">
-                            <div class="arrow arrow-left"></div>
+                        <div class="popover popL" role="tooltip" id="popover328533">
+                            <div class="arrow arrow-right"></div>
                             <h3 class="popover-header popR"><img src="img/q.svg" width="24" height="24" />&nbsp;質問　No.123456789&nbsp;&nbsp;&nbsp;<img src="img/copy.svg" width="24" height="24" alt="copy" onclick="alert('copyしました')" /></h3>
                             <div class="popover-body">Log Analytics エクスペリエンスの最大化 アラート ルールを管理します の通知の設定</div>
                         </div>
 
                         <!---->
                         <div class="container my-4">
-                            <div class="popover popL" role="tooltip" id="popover328533">
-                                <div class="arrow arrow-right"></div>
+                            <div class="popover popR" role="tooltip" id="popover328533">
+                                <div class="arrow arrow-left"></div>
                                 <h3 class="popover-header">
                                     <img src="img/ai.svg" width="24" height="24" />
                                     &nbsp;回答　No.123456789
@@ -163,10 +163,10 @@
                 </div>
                 <!-- ボトム質問 -->
                 <div class="chat-input">
-                    <textarea type="text" rows="3" id="userInput" class="form-control" placeholder="ご質問をどうぞ..."></textarea>
+                    <textarea type="text" rows="2" id="userInput" class="form-control" placeholder="ご質問をどうぞ..."></textarea>
                 </div>
                 <div class="chat-input">
-                    <button id="sendButton" class="btn btn-secondary" onclick="JQA_ins()">&nbsp;送 信&nbsp;</button>
+                    &nbsp;&nbsp;&nbsp;<button id="sendButton" class="btn btn-secondary" onclick="JQA_ins()">&nbsp;送 信&nbsp;</button>
                 </div>
 
             </div>
@@ -213,7 +213,7 @@
                             <br>
                             <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btncheck1">エージェントＡＡ</label>
+                                <label class="btn btn-outline-primary" for="btncheck1">エージェントＡ</label>
 
                                 <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btncheck2">エージェントＢ</label>

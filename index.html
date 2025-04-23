@@ -6,11 +6,11 @@
     <title>Chat</title>
 
     <!-- BootstrapのCSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/DAIKU.css">
     <!-- Bootstrap,jqueryのJavaScript -->
     <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="js/DAIKU.js"></script>
     <script type="text/javascript" src="js/comLib.js"></script>
     <script>
@@ -44,7 +44,7 @@
                 <ul style="color: #343a40;">
                     <img src="img/ai.png" width="72" height="27" style="margin-top: 9px;" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>DAIKU</b>&nbsp;&nbsp;v0.5
+                    <b>DAIKU</b>&nbsp;&nbsp;v0.6
                 </ul>
                 <ul style="color: #343a40;">
                     <button id="newChat" class="btn btn-secondary"><img src="img/new.svg" width="24" height="24" /> 新しいチャット</button>
@@ -53,64 +53,83 @@
         </div>
         <hr>
         <hr>
-        <!-- 左側のナビゲーション Lv1-Lv2 -->
+
+        <!-- 左側のナビゲーション L2-->
         <div class="flexbox flex-row" style="width:100vw;">
             <div id="sidebarL" style="width:18vw;">
-                &nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;検索履歴</b>
-                <!-- タイトル Lv0-Lv1-Lv2
-                <table>
-                      <tr>
-                        <td><input type="text" id="searchInput" class="form-control" placeholder="履歴検索ワードを入力"></td>
-                        <td><button id="searchButton" class="btn btn-secondary">&nbsp;検 索&nbsp;</button></td>
-                      </tr>
-                    </table>
-                -->
-                <ol>
-                    <div id="chatlist" class="mb-3 border rounded" style="padding:0px 0px 0px 10px;"><span>
-                    <li class="ellipsis">text-overflow プロパティを指定することで、文字列が表示領域からはみ出した時に末尾を三点リーダーにした状態で省略する方法は？</li>
-                    <li class="ellipsis">windowsにおいてUSBマイクの優先度は</li>
-                    <li class="ellipsis">Log Analytics エクスペリエンスの最大化 アラート ルールを管理します の通知の設定</li>
-                    <li class="ellipsis">履歴リスト内容４</li>
-                    <li class="ellipsis">履歴リスト内容５</li>
-                    <li class="ellipsis">履歴リスト内容６</li>
-                    <li class="ellipsis">履歴リスト内容７</li>
-                    <li class="ellipsis">履歴リスト内容８</li>
-                    <li class="ellipsis">履歴リスト内容９</li>
-                    <li class="ellipsis">履歴リスト内容１０</li>
-                    <li class="ellipsis">履歴リスト内容１１</li>
-                    <li class="ellipsis">履歴リスト内容１２</li>
-                    <li class="ellipsis">履歴リスト内容１３</li>
-                    <li class="ellipsis">履歴リスト内容１４</li>
-                    <li class="ellipsis">履歴リスト内容１５</li>
-                    <li class="ellipsis">履歴リスト内容１６</li>
-                    <li class="ellipsis">履歴リスト内容１７</li>
-                    <li class="ellipsis">履歴リスト内容１８</li>
-                    <li class="ellipsis">履歴リスト内容１９</li>
-                    <li class="ellipsis">履歴リスト内容２０</li>
-                    </span>
+                <br>
+                <div id="chatselect" class="mb-3 border" style="padding:10px 10px 10px 10px;background-color: #e9ebef7d;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            自動選択
+                        </label>
+                    </div>
+                </div>
+                <div id="chatselect" class="mb-3 border" style="padding:10px 10px 10px 10px;background-color: #e9ebef7d;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            領域選択
+                        </label>
+                    </div>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ▽領域
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" value="領域A">領域A</a></li>
+                            <li><a class="dropdown-item" value="領域B">領域B</a></li>
+                            <li><a class="dropdown-item" value="領域C">領域C</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="chatselect" class="mb-3 border" style="padding:10px 10px 10px 10px;background-color: #e9ebef7d;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            エージェント選択
+                        </label>
+                    </div>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ▽エージェント
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" value="エージェントA">エージェントA</a></li>
+                            <li><a class="dropdown-item" value="エージェントB">エージェントB</a></li>
+                            <li><a class="dropdown-item" value="エージェントC">エージェントC</a></li>
+                        </ul>
+                    </div>
             </div>
-            </ol>
         </div>
+        <script>
+            $(function(){
+                $('.dropdown-menu .dropdown-item').click(function(){
+                    var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
+                    visibleItem.text($(this).attr('value'));
+                });
+            });
+        </script>
 
         <!-- メインコンテンツ Lv2-->
         <div class="flexbox" style="width:67vw;">
             <div id="main" style="height:95vh;">
-
                 <!-- メインスクロール -->
                 <div id="chatbox" class="mb-3 border rounded" style="height:85%;">
 
                     <!---->
                     <div class="container my-4">
-                        <div class="popover popL" role="tooltip" id="popover328533">
-                            <div class="arrow arrow-right"></div>
-                            <h3 class="popover-header popR"><img src="img/q.svg" width="24" height="24" />&nbsp;質問　No.123456789&nbsp;&nbsp;&nbsp;<img src="img/copy.svg" width="24" height="24" alt="copy" onclick="alert('copyしました')" /></h3>
+                        <div class="popover popR" role="tooltip" id="popover328533">
+                            <div class="arrow arrow-left popL"></div>
+                            <h3 class="popover-header"><img src="img/q.svg" width="24" height="24" />&nbsp;質問　No.123456789&nbsp;&nbsp;&nbsp;<img src="img/copy.svg" width="24" height="24" alt="copy" onclick="alert('copyしました')" /></h3>
                             <div class="popover-body">Log Analytics エクスペリエンスの最大化 アラート ルールを管理します の通知の設定</div>
                         </div>
 
                         <!---->
                         <div class="container my-4">
-                            <div class="popover popR" role="tooltip" id="popover328533">
-                                <div class="arrow arrow-left"></div>
+                            <div class="popover popL" role="tooltip" id="popover328533">
+                                <div class="arrow arrow-right popR"></div>
                                 <h3 class="popover-header">
                                     <img src="img/ai.svg" width="24" height="24" />
                                     &nbsp;回答　No.123456789
@@ -165,77 +184,51 @@
                 <div class="chat-input">
                     <textarea type="text" rows="2" id="userInput" class="form-control" placeholder="ご質問をどうぞ..."></textarea>
                 </div>
-                <div class="chat-input">
-                    &nbsp;&nbsp;&nbsp;<button id="sendButton" class="btn btn-secondary" onclick="JQA_ins()">&nbsp;送 信&nbsp;</button>
+                <div class="chat-input" style="align-self:self-end">
+                    <button id="sendButton" class="btn btn-secondary" onclick="JQA_ins()">&nbsp;送 信&nbsp;</button>&nbsp;&nbsp;&nbsp;
                 </div>
 
             </div>
         </div>
 
-        <!-- 右側のナビゲーション L2-->
+        <!-- 右側のナビゲーション Lv1-Lv2 -->
         <div class="flexbox" style="height: auto;">
-            <div id="sidebarR" style="width: 15vw;">
+            <div id="sidebarR" style="width: 18vw;">
+                &nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;検索履歴</b>
+                <!-- タイトル Lv0-Lv1-Lv2
+                <table>
+                      <tr>
+                        <td><input type="text" id="searchInput" class="form-control" placeholder="履歴検索ワードを入力"></td>
+                        <td><button id="searchButton" class="btn btn-secondary">&nbsp;検 索&nbsp;</button></td>
+                      </tr>
+                    </table>
+                -->
                 <br>
-                <h6 class="heading-21">エージェント選択</h6>
-                <form class="row g-3">
+                <div id="chatlist" class="mb-3 border rounded" style="padding:10px 10px 10px 10px;background-color: #e9ebef7d;">
                     <ol>
-                        <br>
-                        <div id="chatselect" class="mb-3 border rounded">
-
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">自動選択</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    広く聞く
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    絞り込む
-                                                </label>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btncheck1">エージェントＡ</label>
-
-                                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btncheck2">エージェントＢ</label>
-
-                                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btncheck3">エージェントＣ</label>
-
-                                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btncheck4">エージェントＤ</label>
-
-                                <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btncheck5">エージェントＥ</label>
-
-                                <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btncheck6">エージェントＦ</label>
-
-                            </div>
-                        </div>
+                    <li class="ellipsis">text-overflow プロパティを指定することで、文字列が表示領域からはみ出した時に末尾を三点リーダーにした状態で省略する方法は？</li>
+                    <li class="ellipsis">windowsにおいてUSBマイクの優先度は</li>
+                    <li class="ellipsis">Log Analytics エクスペリエンスの最大化 アラート ルールを管理します の通知の設定</li>
+                    <li class="ellipsis">履歴リスト内容４</li>
+                    <li class="ellipsis">履歴リスト内容５</li>
+                    <li class="ellipsis">履歴リスト内容６</li>
+                    <li class="ellipsis">履歴リスト内容７</li>
+                    <li class="ellipsis">履歴リスト内容８</li>
+                    <li class="ellipsis">履歴リスト内容９</li>
+                    <li class="ellipsis">履歴リスト内容１０</li>
+                    <li class="ellipsis">履歴リスト内容１１</li>
+                    <li class="ellipsis">履歴リスト内容１２</li>
+                    <li class="ellipsis">履歴リスト内容１３</li>
+                    <li class="ellipsis">履歴リスト内容１４</li>
+                    <li class="ellipsis">履歴リスト内容１５</li>
+                    <li class="ellipsis">履歴リスト内容１６</li>
+                    <li class="ellipsis">履歴リスト内容１７</li>
+                    <li class="ellipsis">履歴リスト内容１８</li>
+                    <li class="ellipsis">履歴リスト内容１９</li>
+                    <li class="ellipsis">履歴リスト内容２０</li>
                     </ol>
-                </form>
-            </div>
-
+                </div>
+        </div>
         </div>
 
     </div>

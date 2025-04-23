@@ -1,13 +1,13 @@
 //要素を文字列として配列に push() して最後に join() して innerHTML する
 
 var ques_id  = "<div class='container my-4 blur-q'><div class='popover popR' role='tooltip' id='";
-var ques_no  = "'><div class='arrow arrow-left'></div><h3 class='popover-header popR'><img src ='img/q.svg' width='24' height='24'/>";
+var ques_no  = "'><div class='arrow arrow-left popL'></div><h3 class='popover-header'><img src ='img/q.svg' width='24' height='24'/>";
 var ques_cpy = "<img src ='img/copy.svg' width='24' height='24' alt='copy' onclick='";
 var ques_txt = "'/></h3><div class='popover-body'>";
 var ques_end = "</div></div>";
 
 var ans_id  = "<div class='container my-4 blur-a'><div class='popover popL' role='tooltip' id='";
-var ans_no  = "'><div class='arrow arrow-right'></div><h3 class='popover-header'><img src ='img/ai.svg' width='24' height='24'/>";
+var ans_no  = "'><div class='arrow arrow-right popR'></div><h3 class='popover-header popR'><img src ='img/ai.svg' width='24' height='24'/>";
 var ans_cpy = "<img src ='img/copy.svg' width='24' height='24'";
 var ans_txt = "'/></h3><div class='popover-body'>";
 var ans_end = "</div></div>";
